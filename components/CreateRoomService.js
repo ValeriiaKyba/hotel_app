@@ -4,9 +4,11 @@ import {
   View,
   FlatList,
   Text,
+  Image,
   Button,
   TextInput,
   Picker,
+  Pressable,
   StyleSheet
 } from 'react-native'
 
@@ -119,8 +121,8 @@ class CreateRoomService extends React.Component {
     <View>
       <NavBar { ...this.props }/>
       <View>
+        <Image style={styles.image} source={require('../images/Cleaning.jpg')}/>
       <View>
-        <Button onPress={() => this.showDatepicker()} title="Select date!" />
       </View>
         {show && (<DateTimePicker
           testID="dateTimePicker"
@@ -130,21 +132,28 @@ class CreateRoomService extends React.Component {
           display="default"
           onChange={(event, selectedDate) => this.onChange(event, selectedDate)}
         />)}
+        <View style={[styles.border, styles.margins]}>
          <Picker
            selectedValue="select"
            onValueChange={(itemValue, itemIndex) => {this.setState({room: itemValue})}}
          >
          {items.map(function(item){
-            return <Picker.Item label={ format('Room #{0}', item.id) } value={item.id} />
+            return <Picker.Item style={styles.font} label={ format('Room #{0}', item.id) } value={item.id} />
          })}
          </Picker>
-         <View>
-            <Text>{ date.toISOString() }</Text>
          </View>
-         <View>
-             <Button onPress={() => this.create()} title="Create!" />
+         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={[styles.dateText, styles.font, styles.border]}>
+            { date.getDay()+'/'+date.getMonth()+'/'+date.getFullYear()+' '+date.getHours()+':'+date.getMinutes() }</Text>
+            <Pressable onPress={() => this.showDatepicker()}>
+              <Image style={styles.selectDate} source={require('../images/select-date.jpg')}/>
+            </Pressable>
          </View>
-      </View>
+          <Pressable style={styles.button} onPress={() => this.create()}>
+                <Text style={{color: "white", fontSize: 18}}>Create</Text>
+             </Pressable>
+        </View>
+
       </View>
     )
   }
@@ -162,20 +171,52 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
   },
+  image: {
+    width: 450,
+    height: 450,
+  },
+  selectDate: {
+    width: 60,
+    height: 60,
+    marginLeft: 10
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
   button: {
-      flexDirection:'row',
-      flexWrap:'wrap'
+    backgroundColor: '#983f72',
+    width: 367,
+    height: 60,
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 25,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   flatlist: {
       justifyContent: 'center',
       width: 350,
       height: 55,
-  }
+  },
+  font: {
+    fontSize: 18,
+    fontWeight: 'normal'
+  },
+  dateText: {
+    width: 300,
+    padding: 10,
+    height: 57,
+    alignItems: 'center',
+    marginLeft: 10
+  },
+  border: {
+    borderColor: 'black',
+    borderWidth: 2,
+    borderStyle: 'solid',
+  },
+  margins: {width: 367, marginLeft: 10, marginBottom: 5, marginTop: 5}
 
 })
 

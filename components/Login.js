@@ -2,6 +2,9 @@ import React from 'react'
 import {
   View,
   Button,
+  Image,
+  Pressable,
+  Text,
   TextInput,
   StyleSheet
 } from 'react-native'
@@ -48,11 +51,12 @@ class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+      <Image style={styles.image} source={require('../images/slide-promos-temptation-logo.jpg')} />
         <TextInput
           style={styles.input}
           placeholder='Username'
           autoCapitalize="none"
-          placeholderTextColor='white'
+          placeholderTextColor='black'
           onChangeText={val => this.onChangeText('username', val)}
         />
         <TextInput
@@ -60,45 +64,77 @@ class Login extends React.Component {
           placeholder='Password'
           secureTextEntry={true}
           autoCapitalize="none"
-          placeholderTextColor='white'
+          placeholderTextColor='black'
           onChangeText={val => this.onChangeText('password', val)}
         />
-        <Button
-          style={styles.button}
-          title='Login'
-          onPress={this.login}
-        />
-        <Button
-          style={styles.button}
-          title='Sign Up'
-          onPress={this.signUp}
-        />
+        <Pressable
+            style={styles.button}
+            onPress={this.login}
+          >
+          <Text style={{color: "white", fontSize: 18}}>Login</Text>
+          </Pressable>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: "center"}}>
+            <Text style={{fontSize: 18, justifyContent: "center", marginTop: 40, padding: 5}}>Don`t have an account?</Text>
+            <Pressable
+              style={styles.smallButton}
+              onPress={() => this.props.navigation.navigate('Home')}
+            >
+              <Text style={{color: "white", fontSize: 18, justifyContent: "center"}}>Sing Up</Text>
+            </Pressable>
+          </View>
       </View>
     )
   }
 }
 
+
 const styles = StyleSheet.create({
   input: {
     width: 350,
     height: 55,
-    backgroundColor: '#42A5F5',
+    backgroundColor: 'white',
     margin: 10,
     padding: 8,
-    color: 'white',
+    color: 'black',
     borderRadius: 14,
+    borderColor: '#983f72',
+    borderWidth: 2,
     fontSize: 18,
     fontWeight: '500',
   },
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   button: {
-      flexDirection:'row',
-      flexWrap:'wrap'
-    }
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 350,
+    height: 55,
+    backgroundColor: '#983f72',
+    borderRadius: 14,
+    borderColor: '#983f72',
+    borderWidth: 2,
+    marginTop: 40
+    },
+  smallButton: {
+     justifyContent: 'center',
+     alignItems: 'center',
+     width: 100,
+     height: 55,
+     backgroundColor: '#983f72',
+     borderRadius: 14,
+     borderColor: '#983f72',
+     borderWidth: 2,
+     marginTop: 40
+     },
+  image: {
+    height: 50,
+    width: 330,
+    margin: 40
+  }
 })
 
 const mapStateToProps = (state) => {

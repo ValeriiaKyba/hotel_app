@@ -5,6 +5,9 @@ import {
   FlatList,
   Text,
   Button,
+  Pressable,
+  ScrollView,
+  Image,
   TextInput,
   Picker,
   StyleSheet
@@ -167,10 +170,26 @@ class CreateOrder extends React.Component {
     return (
     <View>
       <NavBar { ...this.props }/>
-      <View style={styles.container}>
-      <View>
-        <Button onPress={() => this.showDatepicker()} title="Select date!" />
-      </View>
+       <Text style={[styles.font, styles.text]}>Choose room number:</Text>
+      <View style={[styles.border, styles.margins]}>
+      <Picker
+           selectedValue="select"
+           style={{ height: 50, width: 350 }}
+           onValueChange={(itemValue, itemIndex) => {this.setState({room: itemValue})}}
+         >
+         {isLoaded && (rooms.map(function(item){
+            return <Picker.Item label={ format('Room #{0}', item.id) } value={item.id} />
+         }))}
+       </Picker>
+     </View>
+     <Text style={[styles.font, styles.text]}>Choose destination time:</Text>
+    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Text style={[styles.dateText, styles.font, styles.border]}>
+        { date.getDay()+'/'+date.getMonth()+'/'+date.getFullYear()+' '+date.getHours()+':'+date.getMinutes() }</Text>
+        <Pressable onPress={() => this.showDatepicker()}>
+          <Image style={styles.selectDate} source={require('../images/select-date.jpg')}/>
+        </Pressable>
+     </View>
         {show && (<DateTimePicker
           testID="dateTimePicker"
           value={date}
@@ -179,37 +198,32 @@ class CreateOrder extends React.Component {
           display="default"
           onChange={(event, selectedDate) => this.onChange(event, selectedDate)}
         />)}
-         <Picker
-           selectedValue="select"
-           style={{ height: 50, width: 150 }}
-           onValueChange={(itemValue, itemIndex) => {this.setState({room: itemValue})}}
-         >
-         {isLoaded && (rooms.map(function(item){
-            return <Picker.Item label={ format('Room #{0}', item.id) } value={item.id} />
-         }))}
-         </Picker>
-         <View>
-            <Text>{ date.toISOString() }</Text>
-         </View>
-         {dishesLoaded && (<View>
+      <Text style={[styles.font, styles.text]}>Choose dishes:</Text>
+         {dishesLoaded && (<ScrollView style={{height: 300}}>
             {dishes.map(function(dish){
               return (
-              <View>
-                <Text>{dish.title}</Text>
-                <Button onPress={minusDish(dish.id)} title="-" />
-                <Text>{counters[dish.id] || 0}</Text>
-                <Button onPress={plusDish(dish.id)} title="+" />
+              <View style={{flexDirection: 'row', alignItems: 'center', width: 400}}>
+                <Text style={[styles.font, {width: 250, margin:20}]}>{dish.title}</Text>
+                <View style={{flexDirection: 'row', float: 'right'}}>
+                <Pressable style={styles.smallButton} onPress={minusDish(dish.id)}>
+                  <Text style={[styles.font, {color: 'white'}]}> - </Text>
+                </Pressable>
+                <Text style={[styles.font, {margin: 10, marginTop: 0}]}>{counters[dish.id] || 0}</Text>
+                <Pressable style={styles.smallButton} onPress={plusDish(dish.id)}>
+                  <Text style={[styles.font, {color: 'white'}]}> + </Text>
+                </Pressable>
+                </View>
               </View>)
             })}
-         </View>)}
-         <View>
-             <Button onPress={() => this.create()} title="Create!" />
-         </View>
-      </View>
+         </ScrollView>)}
+          <Pressable style={styles.button} onPress={() => this.create()}>
+                <Text style={{color: "white", fontSize: 18}}>Create</Text>
+          </Pressable>
       </View>
     )
   }
 }
+
 
 const styles = StyleSheet.create({
   input: {
@@ -223,21 +237,54 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
   },
+  image: {
+    width: 450,
+    height: 450,
+  },
+  selectDate: {
+    width: 60,
+    height: 60,
+    marginLeft: 10
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
   button: {
-      flexDirection:'row',
-      flexWrap:'wrap'
+    backgroundColor: '#983f72',
+    width: 367,
+    height: 60,
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 25,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   flatlist: {
       justifyContent: 'center',
       width: 350,
       height: 55,
-  }
-
+  },
+  font: {
+    fontSize: 18,
+    fontWeight: 'normal'
+  },
+  dateText: {
+    width: 300,
+    padding: 16,
+    height: 57,
+    alignItems: 'center',
+    marginLeft: 10
+  },
+  border: {
+    borderColor: 'black',
+    borderWidth: 2,
+    borderStyle: 'solid',
+  },
+  margins: {width: 367, marginLeft: 10, marginBottom: 5, marginTop: 5},
+  text: {marginLeft: 10, marginTop: 25},
+  smallButton: {height: 30, width: 30, alignItems: 'center', justifyContent: 'center', backgroundColor: '#983f72', borderRadius: 4},
 })
 
 

@@ -3,6 +3,9 @@ import {
   View,
   Button,
   TextInput,
+  Image,
+  Text,
+  Pressable,
   StyleSheet
 } from 'react-native'
 import { connect } from 'react-redux';
@@ -94,23 +97,25 @@ export default class OrderNav extends React.Component {
     return (
     <View>
         <NavBar { ...this.props }/>
-      <View style={styles.container}>
-        <Button
-          style={styles.button}
-          title='Menu'
+        <Image style={styles.image} source={require('../images/FoodInRoom.png')}/>
+        <Pressable
+          style={[styles.button, styles.violet]}
           onPress={this.ViewDishes}
-        />
-        <Button
-          style={styles.button}
-          title='My Orders'
+        >
+          <Text style={[styles.font, {color: 'white'}]}>Menu</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.button, styles.white]}
           onPress={this.ViewOrders}
-        />
-        <Button
-          style={styles.button}
-          title='Create New Order'
+        >
+          <Text style={[styles.font, {color: '#983f72'}]}>My Orders</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.button, styles.violet]}
           onPress={this.CreateOrder}
-        />
-      </View>
+        >
+          <Text style={[styles.font, {color: 'white'}]}>Create New Order</Text>
+        </Pressable>
       </View>
     )
   }
@@ -134,9 +139,26 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   button: {
-      flexDirection:'row',
-      flexWrap:'wrap'
-    }
+      width: 400,
+      height: 90,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+  image: {
+    height: 400,
+    width: 400
+  },
+  violet: {
+    backgroundColor: '#983f72'
+  },
+  white: {
+    backgroundColor: 'white'
+  },
+  font: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  }
+
 })
 
 

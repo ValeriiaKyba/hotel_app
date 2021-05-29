@@ -67,9 +67,14 @@ class ViewRoomService extends React.Component {
           <FlatList
               data={items}
               keyExtractor={({ id }, index) => id}
-              renderItem={({ item }) => (
+              renderItem={function({ item }){
+              var date = new Date(item.destination_time)
+              return(
+              <View>
                 <Text>Room #{item.room} Time: {item.destination_time}</Text>
-              )}
+                <Text>Time: { date.getDay()+'/'+date.getMonth()+'/'+date.getFullYear()+' '+date.getHours()+':'+date.getMinutes() }</Text>
+              </View>
+              )}}
             />
             <Button
               title='Create New'

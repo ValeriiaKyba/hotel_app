@@ -4,6 +4,8 @@ import {
   View,
   FlatList,
   Text,
+  Image,
+  Pressable,
   Button,
   TextInput,
   Picker,
@@ -120,17 +122,18 @@ class CreateBookTable extends React.Component {
     <View>
       <NavBar { ...this.props }/>
       <View>
+        <Image style={styles.image} source={require('../images/Table.jpg')}/>
       <View>
-              <Button onPress={() => this.showDatepicker()} title="Select date!" />
-            </View>
-              {show && (<DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode={mode}
-                is24Hour={true}
-                display="default"
-                onChange={(event, selectedDate) => this.onChange(event, selectedDate)}
-              />)}
+      </View>
+        {show && (<DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={(event, selectedDate) => this.onChange(event, selectedDate)}
+        />)}
+      <View style={[styles.border, styles.margins]}>
          <Picker
            selectedValue="select"
            onValueChange={(itemValue, itemIndex) => {this.setState({table: itemValue})}}
@@ -139,12 +142,19 @@ class CreateBookTable extends React.Component {
             return <Picker.Item id={item.id} label={ format('Table #{0} Cap {1}', item.id, item.capacity) } value={item.id} />
          })}
          </Picker>
-         <View>
-            <Text>{ date.toISOString() }</Text>
+      </View>
+
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={[styles.dateText, styles.font, styles.border]}>
+            { date.getDay()+'/'+date.getMonth()+'/'+date.getFullYear()+' '+date.getHours()+':'+date.getMinutes() }</Text>
+            <Pressable onPress={() => this.showDatepicker()}>
+              <Image style={styles.selectDate} source={require('../images/select-date.jpg')}/>
+            </Pressable>
          </View>
-         <View>
-             <Button onPress={() => this.create()} title="Create!" />
-         </View>
+          <Pressable style={styles.button} onPress={() => this.create()}>
+                <Text style={{color: "white", fontSize: 18}}>Create</Text>
+          </Pressable>
+
       </View>
       </View>
     )
@@ -163,23 +173,53 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
   },
+  image: {
+    width: 450,
+    height: 450,
+  },
+  selectDate: {
+    width: 60,
+    height: 60,
+    marginLeft: 10
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
   button: {
-      flexDirection:'row',
-      flexWrap:'wrap'
+    backgroundColor: '#983f72',
+    width: 367,
+    height: 60,
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 25,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   flatlist: {
       justifyContent: 'center',
       width: 350,
       height: 55,
-  }
-
+  },
+  font: {
+    fontSize: 18,
+    fontWeight: 'normal'
+  },
+  dateText: {
+    width: 300,
+    padding: 10,
+    height: 57,
+    alignItems: 'center',
+    marginLeft: 10
+  },
+  border: {
+    borderColor: 'black',
+    borderWidth: 2,
+    borderStyle: 'solid',
+  },
+  margins: {width: 367, marginLeft: 10, marginBottom: 5, marginTop: 5}
 })
-
 
 const mapStateToProps = (state) => {
   const { login, password } = state
