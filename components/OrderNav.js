@@ -145,8 +145,8 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     },
   image: {
-    height: 400,
-    width: 400
+    height: 475,
+    width: 500
   },
   violet: {
     backgroundColor: '#983f72'

@@ -3,6 +3,7 @@ import {
   View,
   FlatList,
   Text,
+  Pressable,
   ScrollView,
   Image,
   Button,
@@ -63,25 +64,30 @@ class ViewDishes extends React.Component {
   render() {
     const { items } = this.state
     return (
-    <View>
+    <View style={{backgroundColor: 'white'}}>
       <NavBar { ...this.props }/>
-      <View style={styles.container}>
-          <FlatList
-              data={items}
-              keyExtractor={({ id }, index) => id}
-              renderItem={({ item }) => (
-              <View>
-                <Text>Title #{item.title} weight: {item.weight} weight: {item.description}</Text>
-                <Image style={styles.tinyLogo} source={{uri: item.image}}/>
-              </View>
-              )}
-            />
-            <Button
-              style={styles.button}
-              title='Create New'
-              onPress={() => this.props.navigation.navigate('CreateOrder')}
-            />
-      </View>
+      <FlatList
+        style={styles.scroll}
+        nestedScrollEnabled={true}
+        data={items}
+        ListHeaderComponent={function(){return null}}
+        ListFooterComponent={function(){return null}}
+        keyExtractor={({ id }, index) => index}
+        renderItem={function({ item }){
+        return(
+        <View style={[styles.listItem, {flexDirection: 'row'}]}>
+          <Image style={styles.tinyLogo} source={{uri: item.image}}/>
+          <View style={{marginLeft: 10}}>
+            <Text style={styles.font}>{item.title}</Text>
+            <Text style={styles.font}>weight: {item.weight}</Text>
+            <Text style={[styles.font, {width: 270}]}>{item.description}</Text>
+          </View>
+        </View>
+        )}}
+      />
+      <Pressable style={styles.button} onPress={() => this.props.navigation.navigate('CreateOrder')}>
+            <Text style={{color: "white", fontSize: 18}}>Create</Text>
+      </Pressable>
       </View>
     )
   }
@@ -100,6 +106,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   button: {
       flexDirection:'row',
@@ -110,9 +119,34 @@ const styles = StyleSheet.create({
       width: 350,
       height: 55,
   },
+  listItem: {
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#983f72'
+  },
+  scroll: {
+    height: 620
+  },
+  font: {
+     fontSize: 18,
+     fontWeight: 'normal'
+  },
+  button: {
+    backgroundColor: '#983f72',
+    width: 367,
+    height: 60,
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10
+  },
   tinyLogo: {
-      width: 50,
-      height: 50,
+      width: 80,
+      height: 80,
     }
 
 })

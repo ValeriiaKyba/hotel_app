@@ -4,6 +4,7 @@ import {
   FlatList,
   Text,
   Button,
+  Pressable,
   TextInput,
   StyleSheet
 } from 'react-native'
@@ -61,21 +62,27 @@ class ViewBookTable extends React.Component {
   render() {
     const { items } = this.state
     return (
-    <View>
+    <View style={{backgroundColor: 'white'}}>
     <NavBar { ...this.props }/>
-      <View>
-          <FlatList
-              data={items}
-              keyExtractor={({ id }, index) => id}
-              renderItem={({ item }) => (
-                <Text>table #{item.table} Time: {item.destination_time}</Text>
-              )}
-            />
-            <Button
-              title='Create New'
-              onPress={() => this.props.navigation.navigate('CreateBookTable')}
-            />
-      </View>
+    <FlatList
+        style={styles.scroll}
+        nestedScrollEnabled={true}
+        data={items}
+        ListHeaderComponent={function(){return null}}
+        ListFooterComponent={function(){return null}}
+        keyExtractor={({ id }, index) => id.id}
+        renderItem={function({ item }){
+        var date = new Date(item.destination_time)
+        return(
+        <View style={styles.listItem}>
+          <Text style={styles.font}>Table #{item.table}</Text>
+          <Text style={styles.font}>Time: { date.getDay()+'/'+date.getMonth()+'/'+date.getFullYear()+' '+date.getHours()+':'+date.getMinutes() }</Text>
+        </View>
+        )}}
+    />
+    <Pressable style={styles.button} onPress={() => this.props.navigation.navigate('CreateBookTable')}>
+          <Text style={{color: "white", fontSize: 18}}>Create</Text>
+    </Pressable>
     </View>
     )
   }
@@ -106,9 +113,34 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       width: 350,
       height: 55,
-  }
-
+  },
+  listItem: {
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#983f72'
+  },
+  scroll: {
+    height: 620
+  },
+  font: {
+     fontSize: 18,
+     fontWeight: 'normal'
+  },
+  button: {
+    backgroundColor: '#983f72',
+    width: 367,
+    height: 60,
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10
+  },
 })
+
 
 
 const mapStateToProps = (state) => {

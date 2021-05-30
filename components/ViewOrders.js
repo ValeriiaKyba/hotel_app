@@ -62,29 +62,34 @@ class ViewOrders extends React.Component {
   render() {
     const { items } = this.state
     return (
-    <View>
+    <View style={{backgroundColor: 'white'}}>
         <NavBar { ...this.props }/>
-      <View style={styles.container}>
-          <FlatList
-              data={items}
-              keyExtractor={({ id }, index) => id}
-              renderItem={({ item }) => (
-              <View>
-                <Text>Order #{item.id}</Text>
-                <Text>room #{item.room}</Text>
-                <Text>created {item.created}</Text>
-                <Text>destination_time {item.destination_time}</Text>
-                <FlatList
-                  data={item.dishes}
-                  keyExtractor={({ id }, index) => id}
-                  renderItem={({ item }) => (
-                      <Text>{item.dish.title}    {item.count}</Text>
-                  )}
-                  />
-              </View>
-              )}
-            />
-      </View>
+        <FlatList
+            style={styles.scroll}
+            data={items}
+            keyExtractor={({ id }, index) => index}
+            renderItem={function({ item }){
+            var dateDestination = new Date(item.destination_time)
+            var dateCreated = new Date(item.created)
+
+            return (
+            <View style={styles.listItem}>
+              <Text style={styles.font}>Order #{item.id}</Text>
+              <Text style={styles.font}>room #{item.room}</Text>
+              <Text style={styles.font}>created: { dateCreated.getDay()+'/'+dateCreated.getMonth()+'/'+dateCreated.getFullYear()+' '+dateCreated.getHours()+':'+dateCreated.getMinutes() }</Text>
+              <Text style={styles.font}>destination time: { dateDestination.getDay()+'/'+dateDestination.getMonth()+'/'+dateDestination.getFullYear()+' '+dateDestination.getHours()+':'+dateDestination.getMinutes() }</Text>
+              <Text style={styles.font}>Dishes:</Text>
+              <FlatList
+                style={{marginLeft: 5}}
+                data={item.dishes}
+                keyExtractor={({ id }, index) => index*100}
+                renderItem={({ item }) => (
+                    <Text style={styles.font}>{item.dish.title}    {item.count}</Text>
+                )}
+                />
+            </View>
+            )}}
+          />
       </View>
     )
   }
@@ -116,11 +121,31 @@ const styles = StyleSheet.create({
       width: 350,
       height: 55,
   },
-  tinyLogo: {
-      width: 50,
-      height: 50,
-    }
-
+  listItem: {
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#983f72'
+  },
+  scroll: {
+    height: 720
+  },
+  font: {
+     fontSize: 18,
+     fontWeight: 'normal'
+  },
+  button: {
+    backgroundColor: '#983f72',
+    width: 367,
+    height: 60,
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10
+  },
 })
 
 
