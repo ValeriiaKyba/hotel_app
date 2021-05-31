@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     },
   image: {
-    height: 475,
+    height: 400,
     width: 500
   },
   violet: {

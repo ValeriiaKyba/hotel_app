@@ -71,7 +71,7 @@ class ViewRoomService extends React.Component {
             data={items}
             ListHeaderComponent={function(){return null}}
             ListFooterComponent={function(){return null}}
-            keyExtractor={({ id }, index) => id.id}
+            keyExtractor={({ id }, index) => index}
             renderItem={function({ item }){
             var date = new Date(item.destination_time)
             return(
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     borderColor: '#983f72'
   },
   scroll: {
-    height: 620
+    height: 570
   },
   font: {
      fontSize: 18,

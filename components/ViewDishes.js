@@ -80,6 +80,7 @@ class ViewDishes extends React.Component {
           <View style={{marginLeft: 10}}>
             <Text style={styles.font}>{item.title}</Text>
             <Text style={styles.font}>weight: {item.weight}</Text>
+            <Text style={styles.font}>price: {item.price}</Text>
             <Text style={[styles.font, {width: 270}]}>{item.description}</Text>
           </View>
         </View>
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     borderColor: '#983f72'
   },
   scroll: {
-    height: 620
+    height: 550
   },
   font: {
      fontSize: 18,

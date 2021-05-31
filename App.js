@@ -39,13 +39,13 @@ const store = createStore(loginReducer);
 
 class SignUp extends React.Component {
   state = {
-    username: '', password: '', first_name: '', last_name: ''
+    username: '', password: '', first_name: '', last_name: '', errors: {}
   }
   onChangeText = (key, val) => {
     this.setState({ [key]: val })
   }
   signUp = async () => {
-    const { username, password, first_name, last_name } = this.state
+    const { username, password, first_name, email } = this.state
     var success = false
     try {
       await fetch("http://10.0.2.2:888/api/auth/registration/", {
@@ -53,19 +53,17 @@ class SignUp extends React.Component {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({username: username, password: password, first_name: first_name, last_name: last_name})
-          }).then(res => res.json())
-            .then(
+            body: JSON.stringify({username: username, password: password, first_name: first_name, email: email})
+          }).then(
               (result) => {
-                success = true
+                if (result.status >= 300) {
+                    return result.json()
+                }
                 this.props.navigation.navigate('Login')
-              },
-              // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
-              // чтобы не перехватывать исключения из ошибок в самих компонентах.
-              (error) => {
-
               }
-            )
+            ).then((res) => {
+              this.setState({errors: res || {}})
+            })
       console.log('user successfully signed up!: ', success)
     } catch (err) {
       console.log('error signing up: ', err)
@@ -84,7 +82,7 @@ class SignUp extends React.Component {
           placeholderTextColor='black'
           onChangeText={val => this.onChangeText('username', val)}
         />
-
+        {this.state.errors.username && (<Text style={styles.error}>{this.state.errors.username}</Text>)}
         <TextInput
           style={styles.input}
           placeholder='Password'
@@ -93,6 +91,7 @@ class SignUp extends React.Component {
           placeholderTextColor='black'
           onChangeText={val => this.onChangeText('password', val)}
         />
+        {this.state.errors.password && (<Text style={styles.error}>{this.state.errors.password}</Text>)}
         <TextInput
           style={styles.input}
           placeholder='First Name'
@@ -102,11 +101,12 @@ class SignUp extends React.Component {
         />
         <TextInput
           style={styles.input}
-          placeholder='Last Name'
+          placeholder='Email'
           autoCapitalize="none"
           placeholderTextColor='black'
-          onChangeText={val => this.onChangeText('last_name', val)}
+          onChangeText={val => this.onChangeText('email', val)}
         />
+        {this.state.errors.email && (<Text style={styles.error}>{this.state.errors.email}</Text>)}
         <Pressable
           style={styles.button}
           onPress={this.signUp}
@@ -173,6 +173,11 @@ const styles = StyleSheet.create({
     height: 50,
     width: 330,
     margin: 40
+  },
+  error: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: 'red'
   }
 })
 
@@ -196,6 +201,8 @@ function App() {
         <Stack.Screen name="ViewOrders" component={ViewOrders} />
         <Stack.Screen name="CreateOrder" component={CreateOrder} />
         <Stack.Screen name="OrderNav" component={OrderNav} />
+        <Stack.Screen name="Map" component={Map} />
+        <Stack.Screen name="News" component={News} />
 
       </Stack.Navigator>
     </NavigationContainer>

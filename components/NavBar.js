@@ -9,7 +9,8 @@ import {
   Modal,
   Button,
   TextInput,
-  StyleSheet
+  StyleSheet,
+  Linking
 } from 'react-native'
 
 import base64 from 'base-64';
@@ -64,22 +65,22 @@ export default class NavBar extends React.Component {
           </Pressable>
           <Pressable
             style={styles.button}
-            onPress={() => {this.props.navigation.navigate("OrderNav")}}>
+            onPress={() => {this.props.navigation.navigate("Map")}}>
             <Text style={[styles.violet, styles.font, styles.buttonText]}>Map</Text>
           </Pressable>
           <Pressable
             style={styles.button}
-            onPress={() => {this.props.navigation.navigate("OrderNav")}}>
+            onPress={() => {this.props.navigation.navigate("News")}}>
             <Text style={[styles.violet, styles.font, styles.buttonText]}>Theme nights</Text>
           </Pressable>
           <Pressable
             style={styles.button}
-            onPress={() => {this.props.navigation.navigate("OrderNav")}}>
+            onPress={() => {Linking.openURL('https://www.temptation-experience.com/')}}>
             <Text style={[styles.violet, styles.font, styles.buttonText]}>Book a room</Text>
           </Pressable>
           <Pressable
             style={styles.button}
-            onPress={() => {this.props.navigation.navigate("OrderNav")}}>
+            onPress={() => {Linking.openURL('https://temptationsocial.com/')}}>
             <Text style={[styles.violet, styles.font, styles.buttonText]}>Temptation social</Text>
           </Pressable>
         </View>

@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     borderColor: '#983f72'
   },
   scroll: {
-    height: 720
+    height: 670
   },
   font: {
      fontSize: 18,

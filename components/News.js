@@ -23,7 +23,7 @@ class News extends React.Component {
     return (
       <View>
         <NavBar { ...this.props }/>
-        <Image style={styles.image} source={require('../images/WelcomePage.png')}/>
+        <Image style={styles.image} source={require('../images/Events.png')}/>
       </View>
     )
   }

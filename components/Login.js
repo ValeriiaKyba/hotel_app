@@ -27,6 +27,8 @@ class Login extends React.Component {
   login = async () => {
       const { username, password } = this.state
       var props = this.props;
+      var setState = this.setState
+
       try {
         await fetch('http://10.0.2.2:888/api/tables/', {
           method: 'GET',
@@ -35,12 +37,12 @@ class Login extends React.Component {
             'Authorization': 'Basic ' + base64.encode(utf8.encode(username + ":" + password))
 
           }
-        }).then((response) => response.status).then(function(status) {
+        }).then((response) => response.status).then((status) => {
             if (status === 200) {
                 props.login({login: username, password: password})
                 props.navigation.navigate('Navigation')
             } else {
-
+              this.setState({errorMsg: "Wrong password."})
             }
         });
       } catch (err) {
@@ -67,6 +69,7 @@ class Login extends React.Component {
           placeholderTextColor='black'
           onChangeText={val => this.onChangeText('password', val)}
         />
+        {this.state.errorMsg && (<Text style={styles.error}>{this.state.errorMsg}</Text>)}
         <Pressable
             style={styles.button}
             onPress={this.login}
@@ -134,7 +137,12 @@ const styles = StyleSheet.create({
     height: 50,
     width: 330,
     margin: 40
-  }
+  },
+   error: {
+     fontSize: 18,
+     fontWeight: '500',
+     color: 'red'
+   }
 })
 
 const mapStateToProps = (state) => {
