@@ -3,7 +3,8 @@ import {
   View,
   Button,
   TextInput,
-  StyleSheet
+  StyleSheet,
+  Image
 } from 'react-native'
 import { connect } from 'react-redux';
 import NavBar from './NavBar.js';
@@ -92,58 +93,18 @@ class Navigation extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Button
-          style={styles.button}
-          title='Find a room'
-          onPress={this.findRoom}
-        />
-        <Button
-          style={styles.button}
-          title='Social'
-          onPress={this.Social}
-        />
-        <Button
-          style={styles.button}
-          title='Room service'
-          onPress={this.RoomService}
-        />
-        <Button
-          style={styles.button}
-          title='Book table'
-          onPress={this.BookTable}
-        />
-        <Button
-          style={styles.button}
-          title='Food in room'
-          onPress={this.FoodInRoom}
-        />
-        <Button
-          style={styles.button}
-          title='Map'
-          onPress={this.Map}
-        />
-        <Button
-          style={styles.button}
-          title='News'
-          onPress={this.News}
-        />
+      <View>
+        <NavBar { ...this.props }/>
+        <Image style={styles.image} source={require('../images/WelcomePage.png')}/>
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  input: {
-    width: 350,
-    height: 55,
-    backgroundColor: '#42A5F5',
-    margin: 10,
-    padding: 8,
-    color: 'white',
-    borderRadius: 14,
-    fontSize: 18,
-    fontWeight: '500',
+  image: {
+    width: 400,
+    height: 670,
   },
   container: {
     flex: 1,

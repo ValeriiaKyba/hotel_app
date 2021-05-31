@@ -62,6 +62,26 @@ export default class NavBar extends React.Component {
             onPress={() => {this.props.navigation.navigate("OrderNav")}}>
             <Text style={[styles.violet, styles.font, styles.buttonText]}>Food in room</Text>
           </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={() => {this.props.navigation.navigate("OrderNav")}}>
+            <Text style={[styles.violet, styles.font, styles.buttonText]}>Map</Text>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={() => {this.props.navigation.navigate("OrderNav")}}>
+            <Text style={[styles.violet, styles.font, styles.buttonText]}>Theme nights</Text>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={() => {this.props.navigation.navigate("OrderNav")}}>
+            <Text style={[styles.violet, styles.font, styles.buttonText]}>Book a room</Text>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={() => {this.props.navigation.navigate("OrderNav")}}>
+            <Text style={[styles.violet, styles.font, styles.buttonText]}>Temptation social</Text>
+          </Pressable>
         </View>
       </Modal>
       <Pressable

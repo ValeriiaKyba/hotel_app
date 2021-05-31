@@ -31,6 +31,8 @@ import ViewDishes from "./components/ViewDishes.js"
 import CreateOrder from "./components/CreateOrder.js"
 import OrderNav from "./components/OrderNav.js"
 import ViewOrders from "./components/ViewOrders.js"
+import News from "./components/News.js"
+import Map from "./components/Map.js"
 
 const store = createStore(loginReducer);
 
